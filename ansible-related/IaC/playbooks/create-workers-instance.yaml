@@ -1,0 +1,12 @@
+- name: Create Worker Machines
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  any_errors_fatal: true
+  vars_files:
+    - ../vars/machines.yaml
+  vars:
+    inventory_file: "{{ playbook_dir }}/../inventory.ini"
+  tasks:
+    - name: Create All Workers
+      import_tasks: tasks/create-workers-task.yaml

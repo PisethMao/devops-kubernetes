@@ -1,0 +1,50 @@
+# syntax=docker/dockerfile:1
+
+# Use immutable image tags rather than mutable tags (like ubuntu:24.04)
+FROM ubuntu:noble-20260113@sha256:cd1dba651b3080c3686ecf4e3c4220f026b521fb76978881737d24f200828b2b
+
+# Some tools like yamllint need this
+# Pip needs this as well at the moment to install ansible
+# (and potentially other packages)
+# See: https://github.com/pypa/pip/issues/10219
+ENV LANG=C.UTF-8 \
+    DEBIAN_FRONTEND=noninteractive \
+    PYTHONDONTWRITEBYTECODE=1
+
+WORKDIR /kubespray
+
+# hadolint ignore=DL3008
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    apt-get update -q \
+    && apt-get install -yq --no-install-recommends \
+    curl \
+    python3 \
+    python3-pip \
+    sshpass \
+    vim \
+    rsync \
+    openssh-client \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /var/log/*
+
+RUN --mount=type=bind,source=requirements.txt,target=requirements.txt \
+    --mount=type=cache,sharing=locked,id=pipcache,mode=0777,target=/root/.cache/pip \
+    pip install --break-system-packages --no-compile --no-cache-dir -r requirements.txt \
+    && find /usr -type d -name '*__pycache__' -prune -exec rm -rf {} \;
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN OS_ARCHITECTURE=$(dpkg --print-architecture) \
+    && curl -L "https://dl.k8s.io/release/v1.34.3/bin/linux/${OS_ARCHITECTURE}/kubectl" -o /usr/local/bin/kubectl \
+    && echo "$(curl -L "https://dl.k8s.io/release/v1.34.3/bin/linux/${OS_ARCHITECTURE}/kubectl.sha256")" /usr/local/bin/kubectl | sha256sum --check \
+    && chmod a+x /usr/local/bin/kubectl
+
+COPY *.yml ./
+COPY *.cfg ./
+COPY roles ./roles
+COPY contrib ./contrib
+COPY inventory ./inventory
+COPY library ./library
+COPY extra_playbooks ./extra_playbooks
+COPY playbooks ./playbooks
+COPY plugins ./plugins

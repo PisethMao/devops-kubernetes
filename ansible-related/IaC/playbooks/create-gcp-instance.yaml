@@ -1,0 +1,13 @@
+---
+- name: Create Google Cloud Instance
+  hosts: localhost
+  become: false
+  connection: local
+  vars:
+    machine_name: gcp-instance-ansible01
+    google_project_id: project-5c09b85e-d750-4718-865
+    # service_account_path: ../google-service-account.json
+    ssh_public_key_path: /home/user/.ssh/id_ed25519.pub
+  tasks:
+    - name: Create First GCP Instance
+      import_tasks: tasks/create-gcp-task.yaml
