@@ -1,28 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: host-based-ingress
+  name: path-based-ingress
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - ingress-nginx.piseth.dev
-        - ingress-reactjs.piseth.dev
-      secretName: ingress-host-tls
+        - ingress-earthdx.piseth.dev
+      secretName: ingress-host-tls-2
   rules:
-    - host: ingress-nginx.piseth.dev
-      http:
-        paths:
-          - pathType: Prefix
-            path: "/"
-            backend:
-              service:
-                name: nginx-service
-                port:
-                  number: 80
-    - host: ingress-reactjs.piseth.dev
+    - host: ingress-earthdx.piseth.dev
       http:
         paths:
           - pathType: Prefix
@@ -30,5 +20,12 @@ spec:
             backend:
               service:
                 name: reactjs-service
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/nginx"
+            backend:
+              service:
+                name: nginx-service
                 port:
                   number: 80

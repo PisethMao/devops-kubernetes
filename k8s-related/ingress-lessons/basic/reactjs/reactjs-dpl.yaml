@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: earthdx-dpl
+spec:
+  selector:
+    matchLabels:
+      app: earthdx-app
+  template:
+    metadata:
+      labels:
+        app: earthdx-app
+    spec:
+      containers:
+      - name: earthdx-app
+        image: 69966/earthdx:78
+        resources:
+          requests:
+              memory: "64Mi"
+              cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
