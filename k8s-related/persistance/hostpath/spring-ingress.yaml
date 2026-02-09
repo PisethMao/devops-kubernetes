@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - ingress-image-uploader-3.piseth.dev
+      secretName: ingress-spring-tls-3
+  rules:
+    - host: ingress-image-uploader-3.piseth.dev
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: spring-svc
+                port:
+                  number: 8080
