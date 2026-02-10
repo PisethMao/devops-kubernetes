@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-index-configmap
+data:
+  index.html: |-
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ConfigMap</title>
+      </head>
+      <body>
+        <h1 style="text-align: center">Welcome to Piseth DevOps School.</h1>
+      </body>
+    </html>
