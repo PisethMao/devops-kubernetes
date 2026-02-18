@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gh-image-app
+spec:
+  selector:
+    matchLabels:
+      app: gh-image-app
+  template:
+    metadata:
+      labels:
+        app: gh-image-app
+    spec:
+      containers:
+        - name: gh-image-app
+          image: ghcr.io/pisethmao/nginx:v1.0.0
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: ghcr-secret
