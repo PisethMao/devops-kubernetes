@@ -1,0 +1,54 @@
+---
+- name: Setup NFS Client
+  hosts: node2, node3, node4, node5
+  become: true
+  vars:
+    nfs_remote_dir: /srv/nfs_shared
+    nfs_server_ip: 10.148.0.2
+    nfs_local_dir: /mnt/nfs_shared
+  tasks:
+    - name: Update APT
+      apt:
+        update_cache: yes
+    
+    - name: Install NFS Client
+      apt:
+        name: nfs-common
+        state: present
+    
+    - name: Create Local Mount Directory
+      file:
+        path: "{{nfs_local_dir}}"
+        owner: nobody
+        group: nogroup
+        state: directory
+        mode: "0777"
+    
+    - name: Ensure NFS Server is Reachable
+      wait_for:
+        host: "{{ nfs_server_ip }}"
+        port: 2049
+        state: started
+        timeout: 30
+      retries: 3
+      delay: 5
+    
+    - name: Mount NFS Share
+      mount:
+        src: "{{ nfs_server_ip }}:{{ nfs_remote_dir }}"
+        path: "{{ nfs_local_dir }}"
+        fstype: nfs
+        opts: defaults,vers=4
+        state: mounted
+      become: true
+      retries: 3
+      delay: 10
+    
+    - name: Persist Mount Even After Reboot
+      mount:
+        src: "{{ nfs_server_ip }}:{{ nfs_remote_dir }}"
+        path: "{{ nfs_local_dir }}"
+        fstype: nfs
+        opts: defaults,vers=4
+        state: present
+      become: true
