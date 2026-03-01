@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-uploader-app
+spec:
+  selector:
+    matchLabels:
+      app: spring-uploader-app
+  template:
+    metadata:
+      labels:
+        app: spring-uploader-app
+    spec:
+      containers:
+        - name: spring-uploader-app
+          image: 69966/springgradleimg:1.1.1
+          # resources:
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: image-storage
+              mountPath: app/src/main/resources/images
+      volumes:
+        - name: image-storage
+          persistentVolumeClaim:
+            claimName: dynamic-spring-pvc
