@@ -15,5 +15,10 @@ spec:
       containers:
         - name: {{ .Values.appName.app }}-cont
           image: {{ .Values.container.image }}
+          env:
+          {{- range .Values.container.envs }}
+            - name: {{ .name }}
+              value: {{ .value }}
+          {{- end }}
           ports:
             - containerPort: {{ .Values.container.port }}

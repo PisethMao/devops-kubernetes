@@ -5,3 +5,10 @@ container:
   name: nginx-prod-cont
   image: nginx:trixie-perl
   port: 80
+  envs:
+    - name: POSTGRES_USERNAME
+      value: "postgres-prod"
+    - name: POSTGRES_PASSWORD
+      value: "postgres-prod"
+    - name: POSTGRES_DB
+      value: "postgres-prod"
