@@ -1,3 +1,4 @@
+# prettier-ignore
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,6 +13,8 @@ spec:
       labels:
         app: {{ .Values.appName.app }}
     spec:
+      nodeSelector:
+      {{- toYaml .Values.nodeSelector | nindent 8 }}
       containers:
         - name: {{ .Values.appName.app }}-cont
           image: {{ .Values.container.image }}

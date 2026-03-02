@@ -1,6 +1,8 @@
 appName:
   app: nginx-stagging
 replicas: 2
+nodeSelector:
+  kubernetes.io/hostname: node5
 container:
   name: nginx-stagging-cont
   image: nginx:trixie-perl
