@@ -3,9 +3,28 @@ appName:
 replicas: 5
 nodeSelector:
   kubernetes.io/hostname: node5
+volumeMounts:
+  - name: nginx-config
+    mountPath: /etc/nginx/conf.d
+  - name: nginx-config
+    mountPath: /etc/nginx/nginx.conf
+    subPath: nginx.conf
+volumes:
+  - name: nginx-config
+    configMap:
+      name: nginx-config
+  - name: nginx-config
+    configMap:
+      name: nginx-config
+      items:
+        - key: nginx.conf
+  - name: nginx-config
+    persistentVolumeClaim:
+      claimName: nginx-config-pvc
 container:
   name: nginx-prod-cont
   image: nginx:trixie-perl
+  pullPolicy: IfNotPresent
   port: 80
   envs:
     - name: POSTGRES_USERNAME
