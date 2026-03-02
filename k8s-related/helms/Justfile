@@ -1,0 +1,9 @@
+#!/bin/bash
+render-prod:
+    helm template custom-chart/ --values custom-chart/values.yaml
+render-stage:
+    helm template custom-chart/ --values custom-chart/stage-values.yaml
+release-prod:
+    helm upgrade prod-release custom-chart/ --values custom-chart/values.yaml --install
+release-stage:
+    helm upgrade stage-release custom-chart/ --values custom-chart/stage-values.yaml --install

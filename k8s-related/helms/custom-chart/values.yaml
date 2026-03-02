@@ -1,0 +1,7 @@
+appName:
+  app: nginx-prod
+replicas: 5
+container:
+  name: nginx-prod-cont
+  image: nginx:trixie-perl
+  port: 80

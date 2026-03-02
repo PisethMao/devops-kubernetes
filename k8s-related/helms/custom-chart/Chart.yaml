@@ -1,0 +1,6 @@
+apiVersion: v2
+name: custom-chart
+description: Sample Helm chart for learning Go Templates
+type: application
+version: 0.1.0
+appVersion: "1.16.0"

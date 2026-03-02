@@ -1,0 +1,7 @@
+appName:
+  app: nginx-stagging
+replicas: 2
+container:
+  name: nginx-stagging-cont
+  image: nginx:trixie-perl
+  port: 80
