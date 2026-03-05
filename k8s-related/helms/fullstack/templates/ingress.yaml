@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: full-stack-ing
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - front-end.piseth.dev
+        - back-end.piseth.dev
+      secretName: fullstack-tls
+  rules:
+    - host: front-end.piseth.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: full-stack-frontend
+                port:
+                  number: 80
+
+    - host: back-end.piseth.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: full-stack-backend
+                port:
+                  number: 80

@@ -1,3 +1,6 @@
 {
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+  "yaml.schemas": {
+    "kubernetes://schema/metallb.io/v1beta1@l2advertisement": "file:///home/user/k8s-related/helms/fullstack/metallb-pool.yaml"
+  }
 }

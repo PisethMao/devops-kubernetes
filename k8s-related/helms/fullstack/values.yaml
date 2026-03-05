@@ -1,0 +1,63 @@
+frontend:
+  replicaCount: 2
+  image:
+    repository: pisethmao/my-frontend
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  containerPort: 3000
+backend:
+  replicaCount: 2
+  image:
+    repository: pisethmao/my-backend
+    tag: "1.0.1"
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+  containerPort: 8080
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "lets-encrypt-prod"
+  tls:
+    enabled: true
+    secretName: fullstack-tls
+  frontendHost: front-end.piseth.dev
+  backendHost: back-end.piseth.dev
+postgresql:
+  auth:
+    username: app
+    password: apppassword
+    database: appdb
+  primary:
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "128Mi"
+      limits:
+        cpu: 150m
+        memory: 192Mi
+    persistence:
+      enabled: true
+      storageClass: "nfs-client"
+      size: 8Gi
+serviceAccount:
+  create: true
+  name: ""
+  automount: true
+  annotations: {}
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs: []
+  hostnames: []
+  rules: []
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
