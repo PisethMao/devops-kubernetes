@@ -42,3 +42,7 @@
 # GitHub CLI auth (contains tokens)
 .config/gh/
 **/.config/gh/
+actions-runner/
+.vscode-server/
+.snap/
+.kube/
