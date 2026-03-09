@@ -1,0 +1,1 @@
+{"Name":"builder-5922d56f-92b6-458d-bc4f-3fab67b7222e","Driver":"docker-container","Nodes":[{"Name":"builder-5922d56f-92b6-458d-bc4f-3fab67b7222e0","Endpoint":"unix:///var/run/docker.sock","Platforms":null,"DriverOpts":null,"Flags":["--allow-insecure-entitlement","security.insecure","--allow-insecure-entitlement","network.host"],"Files":null}],"Dynamic":false}
