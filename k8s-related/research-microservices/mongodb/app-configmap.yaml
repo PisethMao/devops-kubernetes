@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: springboot-config
+data:
+  MONGODB_DB: mongodb
+  SPRING_PROFILES_ACTIVE: k8s
