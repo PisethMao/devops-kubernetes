@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 
-    targetRevision: 
-    path:
+    repoURL: https://github.com/PisethMao/deploy-project-with-argocd.git
+    targetRevision: HEAD
+    path: launchly-project
   destination:
     namespace: default
-    server: https://Kubernetes.default.svc
+    server: https://kubernetes.default.svc
   syncPolicy:
     syncOptions:
       - Validate = false
