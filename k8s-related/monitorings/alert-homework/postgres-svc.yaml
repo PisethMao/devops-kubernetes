@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-stateful-svc
+  labels:
+    app: postgres-demo
+spec:
+  clusterIP: None
+  selector:
+    app: postgres-demo
+  ports:
+  - port: 5432
+    targetPort: 5432

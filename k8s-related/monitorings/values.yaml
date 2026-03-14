@@ -574,7 +574,7 @@ alertmanager:
       - receiver: 'telegram-notification'
         matchers:
           # - alertname = "Watchdog"
-          - serverity=~"warning|critical"
+          - severity=~"warning|critical"
     receivers:
     - name: 'null'
     - name: 'telegram-notification'
