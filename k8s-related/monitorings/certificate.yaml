@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kube-stack-new-tls
+  namespace: default
+spec:
+  secretName: kube-stack-new-tls
+  issuerRef:
+    name: lets-encrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - prometheus.piseth.dev
+    - grafana.piseth.dev
